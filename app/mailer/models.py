@@ -17,8 +17,9 @@ class Company(models.Model):
         return orders
 
     def get_order_sum(self):
+        #prefetched related orders 
         total_sum = 0
-        for contact in self.contacts.all():
+        for contact in self.contacts.all().prefetch_related("orders"):
             for order in contact.orders.all():
                 total_sum += order.total
         return total_sum
